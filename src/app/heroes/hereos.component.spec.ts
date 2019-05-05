@@ -23,7 +23,7 @@ describe('HeroesComponent', () => {
 
     beforeEach(() => {
       mockHeroService.deleteHero.and.returnValue(empty());
-    })
+    });
 
     it('should remove indicated hero from the heroes list', () => {
       expect(component.heroes.indexOf(HEROES[2])).toBeGreaterThan(-1);
