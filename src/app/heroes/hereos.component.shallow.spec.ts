@@ -9,6 +9,7 @@ import { Hero } from '../hero';
 describe('HerosComponent (shallow)', () => {
 
   let fixture: ComponentFixture<HeroesComponent>;
+  let element: HTMLElement;
   let de: DebugElement;
   let component: HeroesComponent;
   let mockHeroService: any;
@@ -46,6 +47,7 @@ describe('HerosComponent (shallow)', () => {
     fixture = TestBed.createComponent(HeroesComponent);
     component = fixture.componentInstance;
     de = fixture.debugElement;
+    element = fixture.nativeElement;
   });
 
   it('should set heroes from service', () => {
@@ -53,5 +55,18 @@ describe('HerosComponent (shallow)', () => {
     expect(component.heroes).toBeUndefined();
     fixture.detectChanges();
     expect(component.heroes).toEqual(HEROES);
+  });
+
+  it('should render correct amount of child component', () => {
+    mockHeroService.getHeroes.and.returnValue(of(HEROES));
+    let childs;
+    childs = element.querySelectorAll('app-hero');
+
+    expect(childs.length).toBe(0);
+
+    fixture.detectChanges();
+    childs = element.querySelectorAll('app-hero');
+
+    expect(childs.length).toBe(3);
   });
 });
